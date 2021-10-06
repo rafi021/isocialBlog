@@ -20,7 +20,7 @@
                             >Home</router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
+                         <router-link class="nav-link" aria-current="page" :to="{name: 'post-index'}">Posts</router-link>
                     </li>
                 </ul>
             </div>
