@@ -18,6 +18,7 @@
 </head>
 <body>
     <div id="app">
+        <app-header class="mb-3"></app-header>
         <router-view></router-view>
     </div>
     <!-- Scripts -->
