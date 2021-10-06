@@ -23,10 +23,10 @@ class PostFactory extends Factory
     {
         // defination of post
         return [
-            'name' => $this->faker->title(),
+            'name' => $this->faker->sentence(),
             'slug' => $this->faker->slug(),
             'blog_banner' => '',
-            'blog_body' => $this->faker->sentence(),
+            'blog_body' => $this->faker->paragraph(),
             'category_id' => rand(1,3),
             'tags' => 'new, latest, science, business',
             'user_id' => random_int(1,10),

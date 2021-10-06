@@ -2188,6 +2188,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -2374,6 +2377,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2392,9 +2397,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
-    console.log('component mounted.');
+    this.getPosts();
+  },
+  data: function data() {
+    return {
+      posts: [],
+      errors: {}
+    };
+  },
+  methods: {
+    getPosts: function getPosts() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/posts").then(function (res) {
+        console.log(res.data);
+        _this.posts = res.data;
+      })["catch"](function (res) {
+        console.log(res.data.errors);
+      });
+    }
   }
 });
 
@@ -38790,6 +38835,25 @@ var render = function() {
                   )
                 ],
                 1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: {
+                        "aria-current": "page",
+                        to: { name: "post-create" }
+                      }
+                    },
+                    [_vm._v("Create Post")]
+                  )
+                ],
+                1
               )
             ])
           ]
@@ -39185,39 +39249,123 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
+    _c(
+      "div",
+      { staticClass: "row justify-content-center" },
+      _vm._l(_vm.posts, function(post) {
+        return _c("div", { key: post.id, staticClass: "col-md-12" }, [
           _c(
             "div",
             {
               staticClass:
-                "card-header d-flex justify-content-between align-items-center"
+                "blog-entry ftco-animate d-md-flex fadeInUp ftco-animated"
             },
             [
-              _c("h5", { staticClass: "mb-0" }, [
-                _vm._v(" Post List Component")
-              ]),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { to: { name: "post-create" } }
+              _c("router-link", {
+                staticClass: "img img-2",
+                staticStyle: {
+                  "background-image":
+                    "url(images/ximage_1.jpg.pagespeed.ic.bP9m1ezc08.webp)"
                 },
-                [_vm._v("Create Post")]
-              )
+                attrs: { to: { name: "post-show", params: { id: post.id } } }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "text text-2 pl-md-4" }, [
+                _c(
+                  "h3",
+                  { staticClass: "mb-2" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        attrs: {
+                          to: { name: "post-show", params: { id: post.id } }
+                        }
+                      },
+                      [_vm._v(" " + _vm._s(post.name))]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "meta-wrap" }, [
+                  _c("p", { staticClass: "meta" }, [
+                    _c("span", [
+                      _c("i", { staticClass: "icon-calendar mr-2" }),
+                      _vm._v(_vm._s(post.last_modified))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            attrs: {
+                              to: { name: "post-show", params: { id: post.id } }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "icon-folder-o mr-2" }),
+                            _vm._v(_vm._s(post.category_name))
+                          ]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._m(0, true)
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "mb-4" }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(post.post_body) +
+                      "\n                    "
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "p",
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn-custom",
+                        attrs: {
+                          to: { name: "post-show", params: { id: post.id } }
+                        }
+                      },
+                      [
+                        _vm._v("Read More\n                            "),
+                        _c("span", { staticClass: "ion-ios-arrow-forward" })
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ])
             ],
             1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-bdoy" })
+          )
         ])
-      ])
-    ])
+      }),
+      0
+    )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [
+      _c("i", { staticClass: "icon-comment2 mr-2" }),
+      _vm._v("5 Comment")
+    ])
+  }
+]
 render._withStripped = true
 
 

@@ -36,6 +36,6 @@ class Post extends Model
     // Every Post belong to a Post Category
     public function postcategory()
     {
-        return $this->belongsTo(PostCategory::class)->withDefault();
+        return $this->belongsTo(PostCategory::class, 'category_id', 'id')->withDefault();
     }
 }

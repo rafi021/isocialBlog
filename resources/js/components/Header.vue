@@ -22,6 +22,9 @@
                     <li class="nav-item">
                          <router-link class="nav-link" aria-current="page" :to="{name: 'post-index'}">Posts</router-link>
                     </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" aria-current="page" :to="{ name: 'post-create' }">Create Post</router-link>
+                    </li>
                 </ul>
             </div>
         </div>

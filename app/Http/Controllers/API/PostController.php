@@ -34,7 +34,6 @@ class PostController extends Controller
     public function index()
     {
         $posts = $this->postRepository->all();
-        //$posts = Post::with(['user'])->get();
         return response()->json($posts,200);
     }
 

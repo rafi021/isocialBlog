@@ -10,7 +10,7 @@ class PostRepository{
     public function all()
     {
         return Post::orderBy('id')
-            ->with(['user'])
+            ->with(['user', 'postcategory'])
             ->get()
             ->map->format();
     }
