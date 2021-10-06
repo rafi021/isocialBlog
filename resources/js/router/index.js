@@ -18,8 +18,8 @@ const routes = new VueRouter({
         // Posts Routes
         { path: '/posts', component: PostIndex, name: "post-index"},
         { path: '/posts/create', component: PostCreate, name: "post-create"},
-        { path: '/posts/edit', component: PostEdit, name: "post-edit"},
-        { path: '/posts/show', component: PostShow, name: "post-show"},
+        { path: '/posts/edit/:id', component: PostEdit, name: "post-edit"},
+        { path: '/posts/show/:id', component: PostShow, name: "post-show"},
     ]
 });
 
