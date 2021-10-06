@@ -8,7 +8,7 @@
              <router-link :to="{name: 'post-index'}" class="btn btn-primary">Back to Posts</router-link>
         </div>
           <div class="card-body">
-              <form action="">
+              <form @submit.prevent="postStore">
                   <div class="form-group">
                     <label for="categoryName">Post Category</label>
                     <select name="category_id" id="customSelect1" class="custom-select" v-model="form.category_id">
@@ -18,7 +18,7 @@
                   </div>
                   <div class="form-group">
                     <label for="postTitle">Post Title</label>
-                    <input type="text" name="post_title" id="" class="form-control" placeholder="Enter Post Title">
+                    <input type="text" name="post_title" id="" class="form-control" v-model="form.post_title" placeholder="Enter Post Title">
                     <small class="text-danger" v-if="errors.post_title">{{ errors.post_title[0] }}</small>
                   </div>
                   <div class="form-group">
@@ -55,26 +55,50 @@
 </template>
 
 <script>
+import { Form } from 'vform';
 
 export default {
     name: 'postCreate',
     mounted(){
+        this.getPostCategories();
 
     },
     data(){
         return{
-            form: {
+            form: new Form({
                 post_title: null,
                 post_body: '',
                 post_banner: null,
                 category_id: null,
                 post_tags: null
-            },
+            }),
             categories: {},
             errors: {},
         }
     },
     methods: {
+        getPostCategories(){
+            axios.get('/api/categories')
+            .then((res) => {
+                console.log(res.data)
+                this.categories = res.data
+            });
+        },
+        postStore(){
+            axios.post('/api/posts', this.form)
+            .then((res) => {
+                console.log(res.data);
+                this.form.category_id = '';
+                this.$router.push({name: 'post-index'})
+                this.$toast.success({
+                    title: res.data.alert_type,
+                    message: res.data.message,
+                })
+
+            }).catch((err) => {
+                this.errors = err.res.data.errors;
+            })
+        },
             onFileSelected(event){
                 let file = event.target.files[0];  // get the file details
                 if(file.size > 1048770){

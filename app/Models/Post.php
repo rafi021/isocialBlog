@@ -10,7 +10,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     // Custom format function for Post Model
     public function format()
@@ -20,7 +20,7 @@ class Post extends Model
             'name' => $this->name,
             'post_body' => $this->blog_body,
             'post_banner' => $this->blog_banner,
-            'category_name' => $this->category_id,
+            'category_name' => $this->postcategory->name,
             'tags' => $this->tags,
             'created_by' => $this->user->name,
             'last_modified' => $this->updated_at->diffForHumans(),
@@ -31,5 +31,11 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class)->withDefault();
+    }
+
+    // Every Post belong to a Post Category
+    public function postcategory()
+    {
+        return $this->belongsTo(PostCategory::class)->withDefault();
     }
 }

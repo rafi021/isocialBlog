@@ -21,7 +21,7 @@ class PostFactory extends Factory
      */
     public function definition()
     {
-        // defination of posts
+        // defination of post
         return [
             'name' => $this->faker->title(),
             'slug' => $this->faker->slug(),
