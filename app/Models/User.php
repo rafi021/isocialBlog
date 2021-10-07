@@ -47,4 +47,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    // Every User may have many comments
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

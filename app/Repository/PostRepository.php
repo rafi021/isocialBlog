@@ -19,7 +19,8 @@ class PostRepository{
     public function findById($postId)
     {
         return Post::where('id', $postId)
-            ->with(['user'])
+            ->with(['user','postcategory', 'comments'])
+            ->withCount('comments')
             ->firstOrFail()
             ->format();
     }

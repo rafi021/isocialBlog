@@ -25,7 +25,7 @@ class PostFactory extends Factory
         return [
             'name' => $this->faker->sentence(),
             'slug' => $this->faker->slug(),
-            'blog_banner' => '',
+            'blog_banner' => 'https://picsum.photos/200/300',
             'blog_body' => $this->faker->paragraph(),
             'category_id' => rand(1,3),
             'tags' => 'new, latest, science, business',

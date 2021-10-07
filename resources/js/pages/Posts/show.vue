@@ -6,21 +6,21 @@
             <h1 class="mb-3">{{ post.name }}</h1>
             <span class="h3">[{{ post.category_name }}]</span>
             <p>{{ post.post_body }}</p>
-            <p>
-                <img src="images/ximage_2.jpg.pagespeed.ic.Bj2SSShAni.webp" alt="" class="img-fluid" data-pagespeed-url-hash="4246209171" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
-                <span class="badge badge-primary"> {{ post.tags }} </span>
-            </p>
+            <br>
+            <div class="card">
+                <img :src="post.post_banner" alt="" class="img-fluid">
+            </div>
+             <p><span class="badge badge-primary"> {{ post.tags }} </span></p>
             <div class="pt-5 mt-5">
-            <h3 class="mb-5 font-weight-bold">6 Comments</h3>
+            <h3 class="mb-5 font-weight-bold">{{ post.comments_count }} Comments</h3>
             <ul class="comment-list">
-                <li class="comment">
+                <li class="comment" v-for="(comment) in post.comments" :key="comment.id">
                 <div class="vcard bio">
-                <img src="images/xperson_1.jpg.pagespeed.ic.a2MnMHMs44.webp" alt="Image placeholder" data-pagespeed-url-hash="2239758388" onload="pagespeed.CriticalImages.checkImageForCriticality(this);">
                 </div>
                 <div class="comment-body">
-                <h3>John Doe</h3>
-                <div class="meta">October 03, 2018 at 2:21pm</div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
+                <h3>{{ comment.user_id }}</h3>
+                <div class="meta">{{ comment.updated_at }}</div>
+                <p>{{ comment.message }}</p>
                 <p><a href="#" class="reply">Reply</a></p>
                 </div>
                 </li>

@@ -24,6 +24,8 @@ class Post extends Model
             'tags' => $this->tags,
             'created_by' => $this->user->name,
             'last_modified' => $this->updated_at->diffForHumans(),
+            'comments' => $this->comments,
+            'comments_count' => $this->comments->count(),
         ];
     }
 
@@ -37,5 +39,11 @@ class Post extends Model
     public function postcategory()
     {
         return $this->belongsTo(PostCategory::class, 'category_id', 'id')->withDefault();
+    }
+
+    // Every Post may have many comments
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
 }
