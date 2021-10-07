@@ -19,7 +19,7 @@
                                 <span>
                                     <router-link :to="{name: 'post-show', params: {id: post.post_id }}"><i class="icon-folder-o mr-2"></i>{{ post.category_name }}</router-link>
                                 </span>
-                                <span><i class="icon-comment2 mr-2"></i>5 Comment</span>
+                                <span><i class="icon-comment2 mr-2"></i>{{ post.comments_count }} Comment</span>
                             </p>
                         </div>
                         <p class="mb-4"  v-html="post.post_body">

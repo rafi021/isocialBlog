@@ -1,10 +1,12 @@
 <template>
   <div class="container">
       <div class="row">
+
           <div class="col-md-8 px-md-5 py-5">
                <h3 class="aside--title mb-4">Post Details</h3>
+               <router-link :to="{name: 'post-index'}" class="btn btn-primary">Back to All Posts</router-link>
               <div class="card">
-                <img class="card-img-top" :src="post.post_banner" alt="Card image cap">
+                <img class="card-img-top" :src="img" alt="Card image cap">
                 <p><span class="badge badge-primary"> {{ post.tags }} </span></p>
                 <div class="card-body">
                     <h5 class="card-title">{{ post.name }}</h5>
@@ -67,7 +69,7 @@
 <script>
 import axios from 'axios';
 export default {
-    name: 'showPost',
+    //name: 'showPost',
      mounted() {
         this.getPost();
         this.getPostCategories();
@@ -76,6 +78,7 @@ export default {
         return{
             post: {},
             categories: [],
+            img: null
         }
     },
     methods: {
@@ -85,6 +88,7 @@ export default {
             .then((res) => {
                 console.log(res.data)
                 this.post = res.data
+                this.img = res.data.post_banner
             })
             .catch((err) => {
                 console.log(err)

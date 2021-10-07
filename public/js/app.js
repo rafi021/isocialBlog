@@ -2777,9 +2777,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'showPost',
+  //name: 'showPost',
   mounted: function mounted() {
     this.getPost();
     this.getPostCategories();
@@ -2787,7 +2789,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       post: {},
-      categories: []
+      categories: [],
+      img: null
     };
   },
   methods: {
@@ -2798,6 +2801,7 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/posts/".concat(id)).then(function (res) {
         console.log(res.data);
         _this.post = res.data;
+        _this.img = res.data.post_banner;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -40185,7 +40189,10 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _vm._m(0, true)
+                      _c("span", [
+                        _c("i", { staticClass: "icon-comment2 mr-2" }),
+                        _vm._v(_vm._s(post.comments_count) + " Comment")
+                      ])
                     ])
                   ]),
                   _vm._v(" "),
@@ -40262,17 +40269,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("i", { staticClass: "icon-comment2 mr-2" }),
-      _vm._v("5 Comment")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -40297,99 +40294,116 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8 px-md-5 py-5" }, [
-        _c("h3", { staticClass: "aside--title mb-4" }, [
-          _vm._v("Post Details")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card" }, [
-          _c("img", {
-            staticClass: "card-img-top",
-            attrs: { src: _vm.post.post_banner, alt: "Card image cap" }
-          }),
-          _vm._v(" "),
-          _c("p", [
-            _c("span", { staticClass: "badge badge-primary" }, [
-              _vm._v(" " + _vm._s(_vm.post.tags) + " ")
-            ])
+      _c(
+        "div",
+        { staticClass: "col-md-8 px-md-5 py-5" },
+        [
+          _c("h3", { staticClass: "aside--title mb-4" }, [
+            _vm._v("Post Details")
           ]),
           _vm._v(" "),
           _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _c("h5", { staticClass: "card-title" }, [
-                _vm._v(_vm._s(_vm.post.name))
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "h3" }, [
-                _vm._v("[" + _vm._s(_vm.post.category_name) + "]")
-              ]),
-              _vm._v(" "),
-              _c("p", {
-                staticClass: "card-text",
-                domProps: { innerHTML: _vm._s(_vm.post.post_body) }
-              }),
-              _vm._v(" "),
-              _c(
-                "router-link",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: {
-                    to: { name: "post-edit", params: { id: _vm.post.post_id } }
-                  }
-                },
-                [_vm._v("Edit Post")]
-              ),
-              _vm._v(" "),
-              _c(
-                "a",
-                {
-                  staticClass: "btn btn-danger",
-                  on: {
-                    click: function($event) {
-                      return _vm.deletePost(_vm.post.post_id)
-                    }
-                  }
-                },
-                [_vm._v("Delete Post")]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pt-5 mt-5" }, [
-          _c("h3", { staticClass: "mb-5 font-weight-bold" }, [
-            _vm._v(_vm._s(_vm.post.comments_count) + " Comments")
-          ]),
-          _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "comment-list" },
-            _vm._l(_vm.post.comments, function(comment) {
-              return _c("li", { key: comment.id, staticClass: "comment" }, [
-                _c("div", { staticClass: "vcard bio" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "comment-body" }, [
-                  _c("h3", [_vm._v(_vm._s(comment.user_id))]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "meta" }, [
-                    _vm._v(_vm._s(comment.updated_at))
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [_vm._v(_vm._s(comment.message))]),
-                  _vm._v(" "),
-                  _vm._m(0, true)
-                ])
-              ])
-            }),
-            0
+            "router-link",
+            {
+              staticClass: "btn btn-primary",
+              attrs: { to: { name: "post-index" } }
+            },
+            [_vm._v("Back to All Posts")]
           ),
           _vm._v(" "),
-          _vm._m(1)
-        ])
-      ]),
+          _c("div", { staticClass: "card" }, [
+            _c("img", {
+              staticClass: "card-img-top",
+              attrs: { src: _vm.img, alt: "Card image cap" }
+            }),
+            _vm._v(" "),
+            _c("p", [
+              _c("span", { staticClass: "badge badge-primary" }, [
+                _vm._v(" " + _vm._s(_vm.post.tags) + " ")
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("h5", { staticClass: "card-title" }, [
+                  _vm._v(_vm._s(_vm.post.name))
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "h3" }, [
+                  _vm._v("[" + _vm._s(_vm.post.category_name) + "]")
+                ]),
+                _vm._v(" "),
+                _c("p", {
+                  staticClass: "card-text",
+                  domProps: { innerHTML: _vm._s(_vm.post.post_body) }
+                }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: {
+                      to: {
+                        name: "post-edit",
+                        params: { id: _vm.post.post_id }
+                      }
+                    }
+                  },
+                  [_vm._v("Edit Post")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-danger",
+                    on: {
+                      click: function($event) {
+                        return _vm.deletePost(_vm.post.post_id)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete Post")]
+                )
+              ],
+              1
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "pt-5 mt-5" }, [
+            _c("h3", { staticClass: "mb-5 font-weight-bold" }, [
+              _vm._v(_vm._s(_vm.post.comments_count) + " Comments")
+            ]),
+            _vm._v(" "),
+            _c(
+              "ul",
+              { staticClass: "comment-list" },
+              _vm._l(_vm.post.comments, function(comment) {
+                return _c("li", { key: comment.id, staticClass: "comment" }, [
+                  _c("div", { staticClass: "vcard bio" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "comment-body" }, [
+                    _c("h3", [_vm._v(_vm._s(comment.user_id))]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "meta" }, [
+                      _vm._v(_vm._s(comment.updated_at))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(comment.message))]),
+                    _vm._v(" "),
+                    _vm._m(0, true)
+                  ])
+                ])
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _vm._m(1)
+          ])
+        ],
+        1
+      ),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-4" }, [
         _c("h3", { staticClass: "aside--title mb-4" }, [_vm._v("Categories")]),
