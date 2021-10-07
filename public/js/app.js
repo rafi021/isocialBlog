@@ -2454,7 +2454,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'postCreate',
@@ -2474,7 +2473,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/posts").then(function (res) {
-        console.log(res.data);
+        //console.log(res.data);
         _this.posts = res.data;
       })["catch"](function (res) {
         console.log(res.data.errors);
@@ -2484,7 +2483,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/categories').then(function (res) {
-        console.log(res.data);
+        //console.log(res.data)
         _this2.categories = res.data;
       });
     }
@@ -2561,15 +2560,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'showPost',
   mounted: function mounted() {
     this.getPost();
+    this.getPostCategories();
   },
   data: function data() {
     return {
-      post: {}
+      post: {},
+      categories: []
     };
   },
   methods: {
@@ -2580,6 +2592,32 @@ __webpack_require__.r(__webpack_exports__);
       axios__WEBPACK_IMPORTED_MODULE_0___default().get("/api/posts/".concat(id)).then(function (res) {
         console.log(res.data);
         _this.post = res.data;
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    getPostCategories: function getPostCategories() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get('/api/categories').then(function (res) {
+        console.log(res.data);
+        _this2.categories = res.data;
+      });
+    },
+    deletePost: function deletePost(id) {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default()["delete"]("/api/posts/".concat(id)).then(function (res) {
+        console.log(res.data);
+
+        _this3.$router.push({
+          name: 'post-index'
+        });
+
+        _this3.$toast.success({
+          title: res.data.alert_type,
+          message: res.data.message
+        });
       })["catch"](function (err) {
         console.log(err);
       });
@@ -39668,51 +39706,40 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-4" },
-        [
-          _c("h3", { staticClass: "aside--title mb-4" }, [
-            _vm._v("Categories")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "list-group list-group-flush shadow-sm",
-              attrs: { id: "list-tab", role: "tablist" }
-            },
-            _vm._l(_vm.categories, function(category, index) {
-              return _c(
-                "router-link",
-                {
-                  key: index,
-                  staticClass:
-                    "list-group-item list-group-item-action d-flex justify-content-between align-items-center",
-                  attrs: {
-                    to: {
-                      name: "categories.index",
-                      params: { category: category.slug }
-                    }
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("h3", { staticClass: "aside--title mb-4" }, [_vm._v("Categories")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "list-group list-group-flush shadow-sm",
+            attrs: { id: "list-tab", role: "tablist" }
+          },
+          _vm._l(_vm.categories, function(category, index) {
+            return _c(
+              "router-link",
+              {
+                key: index,
+                staticClass:
+                  "list-group-item list-group-item-action d-flex justify-content-between align-items-center",
+                attrs: {
+                  to: {
+                    name: "categories.index",
+                    params: { category: category.slug }
                   }
-                },
-                [
-                  _vm._v(_vm._s(category.name) + "\n                    "),
-                  _c(
-                    "span",
-                    { staticClass: "badge badge-primary badge-pill" },
-                    [_vm._v(_vm._s(category.posts_count))]
-                  )
-                ]
-              )
-            }),
-            1
-          ),
-          _vm._v(" "),
-          _c("Tag")
-        ],
-        1
-      )
+                }
+              },
+              [
+                _vm._v(_vm._s(category.name) + "\n                    "),
+                _c("span", { staticClass: "badge badge-primary badge-pill" }, [
+                  _vm._v(_vm._s(category.posts_count))
+                ])
+              ]
+            )
+          }),
+          1
+        )
+      ])
     ])
   ])
 }
@@ -39751,24 +39778,16 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-8 px-md-5 py-5" }, [
-        _c("div", { staticClass: "row pt-md-4" }, [
-          _c("h1", { staticClass: "mb-3" }, [_vm._v(_vm._s(_vm.post.name))]),
-          _vm._v(" "),
-          _c("span", { staticClass: "h3" }, [
-            _vm._v("[" + _vm._s(_vm.post.category_name) + "]")
-          ]),
-          _vm._v(" "),
-          _c("p", [_vm._v(_vm._s(_vm.post.post_body))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c("img", {
-              staticClass: "img-fluid",
-              attrs: { src: _vm.post.post_banner, alt: "" }
-            })
-          ]),
+      _c("div", { staticClass: "col-md-8 px-md-5 py-5" }, [
+        _c("h3", { staticClass: "aside--title mb-4" }, [
+          _vm._v("Post Details")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card" }, [
+          _c("img", {
+            staticClass: "card-img-top",
+            attrs: { src: _vm.post.post_banner, alt: "Card image cap" }
+          }),
           _vm._v(" "),
           _c("p", [
             _c("span", { staticClass: "badge badge-primary" }, [
@@ -39776,37 +39795,115 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "pt-5 mt-5" }, [
-            _c("h3", { staticClass: "mb-5 font-weight-bold" }, [
-              _vm._v(_vm._s(_vm.post.comments_count) + " Comments")
-            ]),
-            _vm._v(" "),
-            _c(
-              "ul",
-              { staticClass: "comment-list" },
-              _vm._l(_vm.post.comments, function(comment) {
-                return _c("li", { key: comment.id, staticClass: "comment" }, [
-                  _c("div", { staticClass: "vcard bio" }),
+          _c(
+            "div",
+            { staticClass: "card-body" },
+            [
+              _c("h5", { staticClass: "card-title" }, [
+                _vm._v(_vm._s(_vm.post.name))
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "h3" }, [
+                _vm._v("[" + _vm._s(_vm.post.category_name) + "]")
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "card-text" }, [
+                _vm._v(_vm._s(_vm.post.post_body))
+              ]),
+              _vm._v(" "),
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: {
+                    to: { name: "post-edit", params: { id: _vm.post.post_id } }
+                  }
+                },
+                [_vm._v("Edit Post")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "btn btn-danger",
+                  on: {
+                    click: function($event) {
+                      return _vm.deletePost(_vm.post.post_id)
+                    }
+                  }
+                },
+                [_vm._v("Delete Post")]
+              )
+            ],
+            1
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pt-5 mt-5" }, [
+          _c("h3", { staticClass: "mb-5 font-weight-bold" }, [
+            _vm._v(_vm._s(_vm.post.comments_count) + " Comments")
+          ]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "comment-list" },
+            _vm._l(_vm.post.comments, function(comment) {
+              return _c("li", { key: comment.id, staticClass: "comment" }, [
+                _c("div", { staticClass: "vcard bio" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "comment-body" }, [
+                  _c("h3", [_vm._v(_vm._s(comment.user_id))]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "comment-body" }, [
-                    _c("h3", [_vm._v(_vm._s(comment.user_id))]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "meta" }, [
-                      _vm._v(_vm._s(comment.updated_at))
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [_vm._v(_vm._s(comment.message))]),
-                    _vm._v(" "),
-                    _vm._m(0, true)
-                  ])
+                  _c("div", { staticClass: "meta" }, [
+                    _vm._v(_vm._s(comment.updated_at))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [_vm._v(_vm._s(comment.message))]),
+                  _vm._v(" "),
+                  _vm._m(0, true)
                 ])
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _vm._m(1)
-          ])
+              ])
+            }),
+            0
+          ),
+          _vm._v(" "),
+          _vm._m(1)
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("h3", { staticClass: "aside--title mb-4" }, [_vm._v("Categories")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "list-group list-group-flush shadow-sm",
+            attrs: { id: "list-tab", role: "tablist" }
+          },
+          _vm._l(_vm.categories, function(category, index) {
+            return _c(
+              "router-link",
+              {
+                key: index,
+                staticClass:
+                  "list-group-item list-group-item-action d-flex justify-content-between align-items-center",
+                attrs: {
+                  to: {
+                    name: "categories.index",
+                    params: { category: category.slug }
+                  }
+                }
+              },
+              [
+                _vm._v(_vm._s(category.name) + "\n                        "),
+                _c("span", { staticClass: "badge badge-primary badge-pill" }, [
+                  _vm._v(_vm._s(category.posts_count))
+                ])
+              ]
+            )
+          }),
+          1
+        )
       ])
     ])
   ])

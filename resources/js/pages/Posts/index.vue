@@ -41,7 +41,6 @@
                         <span class="badge badge-primary badge-pill">{{ category.posts_count}}</span>
                     </router-link>
                 </div>
-                <Tag></Tag>
             </div>
         </div>
     </div>
@@ -67,7 +66,7 @@ export default {
             axios
                 .get("/api/posts")
                 .then(res => {
-                    console.log(res.data);
+                    //console.log(res.data);
                     this.posts = res.data;
                 })
                 .catch(res => {
@@ -77,7 +76,7 @@ export default {
         getPostCategories(){
             axios.get('/api/categories')
             .then((res) => {
-                console.log(res.data)
+                //console.log(res.data)
                 this.categories = res.data
             });
         },

@@ -1,16 +1,20 @@
 <template>
   <div class="container">
       <div class="row">
-          <div class="col-lg-8 px-md-5 py-5">
-            <div class="row pt-md-4">
-            <h1 class="mb-3">{{ post.name }}</h1>
-            <span class="h3">[{{ post.category_name }}]</span>
-            <p>{{ post.post_body }}</p>
-            <br>
-            <div class="card">
-                <img :src="post.post_banner" alt="" class="img-fluid">
-            </div>
-             <p><span class="badge badge-primary"> {{ post.tags }} </span></p>
+          <div class="col-md-8 px-md-5 py-5">
+               <h3 class="aside--title mb-4">Post Details</h3>
+              <div class="card">
+                <img class="card-img-top" :src="post.post_banner" alt="Card image cap">
+                <p><span class="badge badge-primary"> {{ post.tags }} </span></p>
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.name }}</h5>
+                    <span class="h3">[{{ post.category_name }}]</span>
+                    <p class="card-text">{{ post.post_body }}</p>
+                    <router-link :to="{name: 'post-edit', params: {id: post.post_id }}" class="btn btn-primary">Edit Post</router-link>
+                    <a @click="deletePost(post.post_id)" class="btn btn-danger">Delete Post</a>
+                </div>
+                </div>
+
             <div class="pt-5 mt-5">
             <h3 class="mb-5 font-weight-bold">{{ post.comments_count }} Comments</h3>
             <ul class="comment-list">
@@ -47,10 +51,17 @@
                 </form>
                 </div>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <h3 class="aside--title mb-4">Categories</h3>
+                <div class="list-group list-group-flush shadow-sm" id="list-tab" role="tablist">
+                    <router-link class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" v-for="(category, index) in categories" :key="index" :to="{name: 'categories.index', params: {category: category.slug} }">{{ category.name }}
+                        <span class="badge badge-primary badge-pill">{{ category.posts_count}}</span>
+                    </router-link>
                 </div>
             </div>
-      </div>
-  </div>
+        </div>
+</div>
 </template>
 
 <script>
@@ -59,10 +70,12 @@ export default {
     name: 'showPost',
      mounted() {
         this.getPost();
+        this.getPostCategories();
     },
     data(){
         return{
             post: {},
+            categories: [],
         }
     },
     methods: {
@@ -72,6 +85,27 @@ export default {
             .then((res) => {
                 console.log(res.data)
                 this.post = res.data
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        },
+        getPostCategories(){
+            axios.get('/api/categories')
+            .then((res) => {
+                console.log(res.data)
+                this.categories = res.data
+            });
+        },
+        deletePost(id){
+            axios.delete(`/api/posts/${id}`)
+            .then((res) =>{
+                console.log(res.data)
+                this.$router.push({name: 'post-index'})
+                this.$toast.success({
+                    title: res.data.alert_type,
+                    message: res.data.message,
+                })
             })
             .catch((err) => {
                 console.log(err)

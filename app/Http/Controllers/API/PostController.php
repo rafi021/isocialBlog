@@ -112,6 +112,13 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $this->postRepository->delete($post->id);
+        $notification  = [
+            'alert_type' => 'success',
+            'message' => 'Post Deleted Successfully!!'
+        ];
+
+        $status_code = 200;
+        return response()->json($notification, $status_code);
     }
 }
