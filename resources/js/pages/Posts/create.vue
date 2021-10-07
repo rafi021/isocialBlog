@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header d-flex justify-content-between align-items-center">
@@ -23,7 +23,8 @@
                   </div>
                   <div class="form-group">
                     <label for="postBody">Post Body</label>
-                    <textarea name="post_body" id="postBody" v-model="form.post_body" cols="60" rows="10"></textarea>
+                    <!-- <textarea name="post_body" id="postBody" v-model="form.post_body" cols="60" rows="10"></textarea> -->
+                    <ckeditor :editor="editor" v-model="form.post_body" :config="editorConfig"></ckeditor>
                     <small class="text-danger" v-if="errors.post_body">{{ errors.post_body[0] }}</small>
                   </div>
 
@@ -56,6 +57,7 @@
 
 <script>
 import { Form } from 'vform';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';;
 
 export default {
     name: 'postCreate',
@@ -74,9 +76,17 @@ export default {
             }),
             categories: {},
             errors: {},
+            editor: ClassicEditor,
+            editorData: '<p>Content of the editor.</p>',
+            editorConfig: {
+                // The configuration of the editor.
+            },
         }
     },
     methods: {
+        onReady( editor )  {
+			document.body.prepend( editor.ui.view.toolbar.element );
+		},
         getPostCategories(){
             axios.get('/api/categories')
             .then((res) => {

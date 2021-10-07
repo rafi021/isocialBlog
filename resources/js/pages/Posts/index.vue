@@ -22,8 +22,7 @@
                                 <span><i class="icon-comment2 mr-2"></i>5 Comment</span>
                             </p>
                         </div>
-                        <p class="mb-4">
-                            {{post.post_body}}
+                        <p class="mb-4"  v-html="post.post_body">
                         </p>
                         <p>
                             <router-link :to="{name: 'post-show', params: {id: post.post_id }}" class="btn-custom"

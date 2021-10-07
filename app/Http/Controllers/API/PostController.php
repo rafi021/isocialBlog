@@ -101,7 +101,39 @@ class PostController extends Controller
      */
     public function update(PostUpdateRequest $request, Post $post)
     {
-        //
+        $post->update([
+            'name' => $request->input('post_title'),
+            'slug' => Str::slug($request->input('post_title')),
+            'blog_body' => $request->post_body,
+            'category_id' => $request->category_id,
+            'user_id' => 1,
+            'tags' => $request->input('post_tags'),
+        ]);
+
+        if($request->new_image){
+            // if($post->blog_banner){
+            //     unlink($post->blog_banner);
+            // }
+            $position = strpos($request->new_image, ';');
+            $sub = substr($request->new_image, 0, $position);
+            $file_extension = explode('/', $sub)[1];
+            $name = time().".".$file_extension;
+            $img = Image::make($request->new_image)->resize(800,800);
+            $upload_path = 'photos/posts/';
+            $image_url = $upload_path.$name;
+            $img->save($image_url);
+            $post->update([
+                'blog_banner' => $image_url,
+            ]);
+        }
+
+        $notification  = [
+            'alert_type' => 'success',
+            'message' => 'Post Updated Successfully!!'
+        ];
+
+        $status_code = 200;
+        return response()->json($notification, $status_code);
     }
 
     /**

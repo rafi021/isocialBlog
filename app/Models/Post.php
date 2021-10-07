@@ -21,6 +21,7 @@ class Post extends Model
             'post_body' => $this->blog_body,
             'post_banner' => $this->blog_banner,
             'category_name' => $this->postcategory->name,
+            'category_id' => $this->category_id,
             'tags' => $this->tags,
             'created_by' => $this->user->name,
             'last_modified' => $this->updated_at->diffForHumans(),

@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ post.name }}</h5>
                     <span class="h3">[{{ post.category_name }}]</span>
-                    <p class="card-text">{{ post.post_body }}</p>
+                    <p class="card-text" v-html="post.post_body"></p>
                     <router-link :to="{name: 'post-edit', params: {id: post.post_id }}" class="btn btn-primary">Edit Post</router-link>
                     <a @click="deletePost(post.post_id)" class="btn btn-danger">Delete Post</a>
                 </div>
